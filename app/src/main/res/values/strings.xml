@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">nav_bar_testing</string>
+
+    <string name="profile_string">This is user profile page</string>
+
+    <string name="project_string">Project Page</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="classPage_string">Class Page is here.</string>
+</resources>

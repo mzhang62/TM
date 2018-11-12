@@ -3,10 +3,19 @@ package com.cs121.tmtm.nav_bar_testing;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -51,6 +60,10 @@ public class class_page extends Fragment {
         return fragment;
     }
 
+    /**
+     * This onCreate is different than an Activity's onCreate method
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +73,36 @@ public class class_page extends Fragment {
         }
     }
 
+    /**
+     * All the views are declared here
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_class_page, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_class_page, container, false);
+        //reference to recyclerView
+        RecyclerView myView = (RecyclerView) rootView.findViewById(R.id.projectView);
+        myView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        ArrayList<ProjectObject> projects = new ArrayList<>();
+        ArrayList<String> members = new ArrayList<>();
+        members.add("Tim");
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add("Java");
+        tags.add("HTML");
+        for(int i = 0; i < 20; i++) {
+            projects.add(new ProjectObject("12345", "TA Master", members, "Accepted", tags));
+        }
+        Project_RecyclerList adaptor = new Project_RecyclerList(projects);
+        myView.setAdapter(adaptor);
+        myView.setItemAnimator(new DefaultItemAnimator());
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -72,6 +110,16 @@ public class class_page extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    /**
+     * Treat this as the onCreate method in an activity
+     * @param savedInstanceState
+     */
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
     }
 
     @Override

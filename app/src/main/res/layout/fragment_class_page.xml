@@ -6,9 +6,9 @@
     tools:context=".class_page">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/classPage_string" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/projectView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>

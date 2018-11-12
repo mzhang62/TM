@@ -97,6 +97,10 @@ class_page.OnFragmentInteractionListener{
             case R.id.nav_project:
                 fragmentClass = create_project.class;
                 break;
+            case R.id.nav_class:
+                fragmentClass = class_page.class;
+                break;
+
             default:
                 fragmentClass = user_profile.class;
         }

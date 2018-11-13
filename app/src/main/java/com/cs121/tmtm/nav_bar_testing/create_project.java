@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +77,9 @@ public class create_project extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_create_project, container, false);
         Button createButton = (Button) rootView.findViewById(R.id.create);
+        Button cancelButton = (Button) rootView.findViewById(R.id.cancel);
         createButton.setOnClickListener(this);
+        cancelButton.setOnClickListener(this);
         return rootView;
     }
 
@@ -111,6 +114,14 @@ public class create_project extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.create:
                 addProjectToDB();
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.flContent, new class_page());
+                fr.commit();
+                break;
+            case R.id.cancel:
+                FragmentTransaction cancel = getFragmentManager().beginTransaction();
+                cancel.replace(R.id.flContent, new class_page());
+                cancel.commit();
                 break;
         }
     }

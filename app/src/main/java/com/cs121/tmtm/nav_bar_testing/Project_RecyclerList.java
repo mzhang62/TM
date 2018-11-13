@@ -57,8 +57,8 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
         String descriptionString = this_project.getProjectDescription();
         //cut the description if the string is too long
         Log.i("project", "des length original is:" + descriptionString.length());
-        if(descriptionString.length() > 90){
-            descriptionString = descriptionString.substring(0, 90 )+ " ...";
+        if(descriptionString.length() > 80){
+            descriptionString = descriptionString.substring(0, 80 )+ " ...";
         }
         Log.i("project", "des length after is:" + descriptionString.length());
         myViewHolder.projectDescription.setText(descriptionString);

@@ -11,16 +11,12 @@
     <!-- image, title, description -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <!-- image -->
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/apple_icon"/>
+
 
         <!-- title and description -->
 
@@ -31,18 +27,20 @@
             <TextView
                 android:id="@+id/projectName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
+                android:layout_height="45dp"
                 android:textSize="30sp"
+                android:fontFamily="sans-serif"
+                android:textColor="#000"
+                android:layout_marginTop="30dp"
                 android:text="project title" />
 
             <TextView
                 android:id="@+id/projectMembers"
+                android:fontFamily="sans-serif"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:layout_marginBottom="5dp"
                 android:textSize="20sp"
-                android:gravity="center"
                 android:text="Project Members" />
         </LinearLayout>
 
@@ -56,16 +54,18 @@
         android:text="Project Descriptions"
         android:scrollbars="vertical"
         android:layout_margin="10dp"
+        android:fontFamily="sans-serif"
+        android:textColor="#000"
         android:textSize="20sp" />
 
     <!-- add note -->
     <EditText
         android:id="@+id/addNote"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:textSize="30sp"
-        android:hint="Note: ...." />
+        android:textSize="18sp"
+        android:hint="Note: Great job !" />
 
     <!-- buttons -->
     <LinearLayout
@@ -74,8 +74,9 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/approve"
+            android:background="#77AF9C"
             android:layout_width="100dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginRight="150dp"
             android:layout_marginLeft="30dp"
             android:onClick="setApproved"
@@ -84,6 +85,7 @@
 
         <Button
             android:id="@+id/decline"
+            android:background="#F38181"
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:layout_marginRight="30dp"

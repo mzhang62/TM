@@ -6,8 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".loginActivity">
 
+
     <EditText
         android:id="@+id/emailEditText"
+
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="58dp"

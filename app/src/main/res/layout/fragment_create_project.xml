@@ -11,36 +11,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- page title -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CREATE PROJECT"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp"
-            android:textAlignment="center"/>
 
         <!-- title and project name -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            >
 
             <TextView
                 android:layout_width="140dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
                 android:text="Project Name"
+                android:fontFamily="sans-serif"
+                android:textColor="#000"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                />
 
             <EditText
                 android:id="@+id/enter_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginRight="16dp"
+
                 android:hint="enter name"/>
         </LinearLayout>
 
@@ -75,12 +71,14 @@
 
             <TextView
                 android:layout_width="140dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:gravity="center"
-                android:text="Project Capacity"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:layout_marginLeft="16dp"
+
+                android:textColor="#000"
+                android:text="Capacity"
+                android:textSize="20sp"
+               />
 
             <EditText
                 android:id="@+id/enter_capacity"
@@ -89,6 +87,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:textSize="20sp"
+                android:layout_marginRight="16dp"
+
                 android:hint="enter capacity"
                 android:inputType="number" />
 
@@ -103,12 +103,13 @@
 
             <TextView
                 android:layout_width="140dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:gravity="center_horizontal"
-                android:text="Project description"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="sans-serif"
+                android:textColor="#000"
+                android:text="Description"
+                android:textSize="20sp"
+                />
 
             <EditText
                 android:id="@+id/enter_des"
@@ -118,6 +119,8 @@
                 android:ems="10"
                 android:textSize="20sp"
                 android:gravity="top|left"
+                android:layout_marginRight="16dp"
+
                 android:hint="please enter description" />
         </LinearLayout>
 
@@ -142,6 +145,8 @@
                 android:layout_width="170dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:layout_marginRight="16dp"
+
 
                 android:text="CANCEL" />
 

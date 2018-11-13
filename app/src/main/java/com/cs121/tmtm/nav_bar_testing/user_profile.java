@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 
 /**
@@ -51,6 +52,8 @@ public class user_profile extends Fragment {
         return fragment;
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +66,16 @@ public class user_profile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_profile, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_user_profile, container, false);
+
+        EditText bioEditText = (EditText) v.findViewById(R.id.bioEditText);
+        EditText knownSkillEditText = (EditText) v.findViewById(R.id.knownSkillEditText);
+        EditText unknownSkillEditText = (EditText) v.findViewById(R.id.unknownSkillEditText);
+
+
+        return v;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

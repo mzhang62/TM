@@ -40,12 +40,24 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="pending_icon" />
-                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\micha\Desktop\apple_icon.png" />
+                                      <entry key="outputName" value="apple_icon" />
                                       <entry key="themeColor" value="e5b106" />
                                     </map>
                                   </option>

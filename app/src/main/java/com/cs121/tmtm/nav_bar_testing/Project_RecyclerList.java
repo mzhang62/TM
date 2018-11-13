@@ -1,9 +1,11 @@
 package com.cs121.tmtm.nav_bar_testing;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +29,14 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView projectName;
         private ImageView projectStatus;
+        private TextView projectMembers;
+        private TextView projectDescription;
         public MyViewHolder(View itemView) {
             super(itemView);
-            projectName = (TextView) itemView.findViewById(R.id.groupName);
-            projectStatus = (ImageView) itemView.findViewById(R.id.statusIMG);
+            projectName = (TextView) itemView.findViewById(R.id.projectName);
+            projectStatus = (ImageView) itemView.findViewById(R.id.status);
+            projectMembers = (TextView) itemView.findViewById(R.id.member);
+            projectDescription = (TextView) itemView.findViewById(R.id.projectDescription);
         }
     }
 
@@ -38,7 +44,7 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
     @Override
     public Project_RecyclerList.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
-        View listItem = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.instructor_project_card_layout, viewGroup,false);
+        View listItem = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.project_card_layout, viewGroup,false);
         return new MyViewHolder(listItem);
     }
 
@@ -47,6 +53,10 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
         final ProjectObject this_project = projectList.get(i);
         String projectName = this_project.getProjectName();
         myViewHolder.projectName.setText(projectName);
+        myViewHolder.projectDescription.setText(this_project.getProjectDescription());
+        myViewHolder.projectDescription.setMovementMethod(new ScrollingMovementMethod());
+
+        myViewHolder.projectMembers.setText(this_project.getProjectMembers().size() + "/" + this_project.getGroupCapacity());
         int projectStatus = this_project.getProjectAcceptedStatus();
         if(projectStatus == APPROVED){
             myViewHolder.projectStatus.setImageResource(R.drawable.approved_icon);
@@ -60,7 +70,9 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
         myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context, ProjectInfoActivity.class);
+                intent.putExtra("projectObj", this_project);
+                context.startActivity(intent);
             }
         });
     }

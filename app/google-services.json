@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "14531889117",
+    "firebase_url": "https://ta-master-34302.firebaseio.com",
+    "project_id": "ta-master-34302",
+    "storage_bucket": "ta-master-34302.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14531889117:android:b55bdd6eb99a0fc6",
+        "android_client_info": {
+          "package_name": "com.cs121.tmtm.nav_bar_testing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14531889117-etu9q5uhkaodd082mrr6h4i94sdkfdrq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeBblR8cNURfgMBkMzUrLTX2DKOgBFSHQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

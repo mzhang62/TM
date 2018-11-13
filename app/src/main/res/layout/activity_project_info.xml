@@ -1,9 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/profile_layout"
     tools:context=".ProjectInfoActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <!-- image, title, description -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <!-- image -->
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/apple_icon"/>
+
+        <!-- title and description -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/projectName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:text="project title" />
+
+            <TextView
+                android:id="@+id/projectMembers"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:text="Project Members" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- long description-->
+    <TextView
+        android:id="@+id/long_des"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:text="Project Descriptions"
+        android:textSize="20sp" />
+
+    <!-- add note -->
+    <EditText
+        android:id="@+id/addNote"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:textSize="30sp"
+        android:hint="Note: ...." />
+
+    <!-- buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/approve"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="150dp"
+            android:layout_marginLeft="30dp"
+            android:text="approve"/>
+
+
+        <Button
+            android:id="@+id/decline"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="30dp"
+            android:text="decline"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -12,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +37,7 @@ public class class_page extends Fragment {
     private static final int APPROVED = 1;
     private static final int DENIED = -1;
     private static final int PENDING = 0;
+    private DatabaseReference projectReference;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -90,15 +94,22 @@ public class class_page extends Fragment {
         //reference to recyclerView
         RecyclerView myView = (RecyclerView) rootView.findViewById(R.id.projectView);
         myView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        projectReference = FirebaseDatabase.getInstance().getReference("Projects");
         ArrayList<ProjectObject> projects = new ArrayList<>();
+        String projectID = projectReference.push().getKey();
+        String projectName = "TA Master";
         ArrayList<String> members = new ArrayList<>();
-        members.add("Tim");
-        for(int i = 0; i < 3; i++) {
-            projects.add(new ProjectObject("12345", "TA Master", members, APPROVED, "Fun Projet", 4));
-            projects.add(new ProjectObject("12345", "TA Master", members, DENIED, "Fun Projet", 4));
-            projects.add(new ProjectObject("12345", "TA Master", members, PENDING, "Fun Projet", 4));
-        }
+        members.add("Haofan");
+        members.add("Michael");
+        members.add("Yun Duo");
+        members.add("Dun Dun");
+        int projectStatus = PENDING;
+        String projectDescription = "TA Master is a porject management project to easy the life of instructors.\n " +
+                "This APP makes the project approval/denial process much easier and quicker.";
+        int projectMaxMemeber = 4;
+        ProjectObject testingProject = new ProjectObject(projectID,projectName,members,projectStatus,projectDescription,projectMaxMemeber);
+        projects.add(testingProject);
+        projectReference.child(projectID).setValue(testingProject);
         Project_RecyclerList adaptor = new Project_RecyclerList(projects);
         myView.setAdapter(adaptor);
         myView.setItemAnimator(new DefaultItemAnimator());

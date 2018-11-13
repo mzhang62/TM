@@ -31,7 +31,9 @@ public class class_page extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private static final int APPROVED = 1;
+    private static final int DENIED = -1;
+    private static final int PENDING = 0;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -95,8 +97,10 @@ public class class_page extends Fragment {
         ArrayList<String> tags = new ArrayList<>();
         tags.add("Java");
         tags.add("HTML");
-        for(int i = 0; i < 20; i++) {
-            projects.add(new ProjectObject("12345", "TA Master", members, "Accepted", tags));
+        for(int i = 0; i < 3; i++) {
+            projects.add(new ProjectObject("12345", "TA Master", members, APPROVED, tags));
+            projects.add(new ProjectObject("12345", "TA Master", members, DENIED, tags));
+            projects.add(new ProjectObject("12345", "TA Master", members, PENDING, tags));
         }
         Project_RecyclerList adaptor = new Project_RecyclerList(projects);
         myView.setAdapter(adaptor);

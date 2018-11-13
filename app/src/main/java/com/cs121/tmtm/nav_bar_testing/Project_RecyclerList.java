@@ -1,6 +1,7 @@
 package com.cs121.tmtm.nav_bar_testing;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
 
     private List<ProjectObject> projectList;
     private Context context;
+    private static final int APPROVED = 1;
+    private static final int DENIED = -1;
+    private static final int PENDING = 0;
 
     public Project_RecyclerList(List<ProjectObject> projectList) {
         this.projectList = projectList;
@@ -22,11 +26,11 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView projectName;
-        private TextView projectStatus;
+        private ImageView projectStatus;
         public MyViewHolder(View itemView) {
             super(itemView);
-            projectName = (TextView) itemView.findViewById(R.id.projectNameText);
-            projectStatus = (TextView) itemView.findViewById(R.id.projectStatusText);
+            projectName = (TextView) itemView.findViewById(R.id.groupName);
+            projectStatus = (ImageView) itemView.findViewById(R.id.statusIMG);
         }
     }
 
@@ -34,17 +38,31 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
     @Override
     public Project_RecyclerList.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
-        View listItem = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.project_card_layout, viewGroup,false);
+        View listItem = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.instructor_project_card_layout, viewGroup,false);
         return new MyViewHolder(listItem);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Project_RecyclerList.MyViewHolder myViewHolder, int i) {
-        ProjectObject this_project = projectList.get(i);
+        final ProjectObject this_project = projectList.get(i);
         String projectName = this_project.getProjectName();
         myViewHolder.projectName.setText(projectName);
-        String projectStatus = this_project.getProjectAcceptedStatus();
-        myViewHolder.projectStatus.setText(projectStatus);
+        int projectStatus = this_project.getProjectAcceptedStatus();
+        if(projectStatus == APPROVED){
+            myViewHolder.projectStatus.setImageResource(R.drawable.approved_icon);
+        }
+        else if (projectStatus == DENIED){
+            myViewHolder.projectStatus.setImageResource(R.drawable.denied_icon);
+        }
+        else {
+            myViewHolder.projectStatus.setImageResource(R.drawable.pending_icon);
+        }
+        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override

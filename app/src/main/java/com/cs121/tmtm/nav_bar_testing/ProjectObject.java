@@ -1,24 +1,48 @@
 package com.cs121.tmtm.nav_bar_testing;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectObject {
+public class ProjectObject implements Parcelable {
     private String projectID;
     private String projectName;
     private ArrayList<String> projectMembers;
-    private String projectAcceptedStatus;
+    //approved: 1; denied: -1; pending:0
+    private int projectAcceptedStatus;
     private ArrayList<String> projectTags;
 
     public ProjectObject(String projectID, String projectName, ArrayList<String> projectMembers,
-                         String projectAcceptedStatus, ArrayList<String> projectTags) {
+                         int projectAcceptedStatus, ArrayList<String> projectTags) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.projectMembers = projectMembers;
         this.projectAcceptedStatus = projectAcceptedStatus;
         this.projectTags = projectTags;
     }
+
+    protected ProjectObject(Parcel in) {
+        projectID = in.readString();
+        projectName = in.readString();
+        projectMembers = in.createStringArrayList();
+        projectAcceptedStatus = in.readInt();
+        projectTags = in.createStringArrayList();
+    }
+
+    public static final Creator<ProjectObject> CREATOR = new Creator<ProjectObject>() {
+        @Override
+        public ProjectObject createFromParcel(Parcel in) {
+            return new ProjectObject(in);
+        }
+
+        @Override
+        public ProjectObject[] newArray(int size) {
+            return new ProjectObject[size];
+        }
+    };
 
     public String getProjectID() {
         return projectID;
@@ -41,13 +65,27 @@ public class ProjectObject {
         this.projectMembers = projectMembers;
     }
 
-    public void setProjectAcceptedStatus(String projectAcceptedStatus) {
+    public void setProjectAcceptedStatus(int projectAcceptedStatus) {
         this.projectAcceptedStatus = projectAcceptedStatus;
     }
 
-    public String getProjectAcceptedStatus() {
+    public int getProjectAcceptedStatus() {
 
         return projectAcceptedStatus;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(projectID);
+        parcel.writeString(projectName);
+        parcel.writeStringList(projectMembers);
+        parcel.writeInt(projectAcceptedStatus);
+        parcel.writeStringList(projectTags);
     }
 }
 

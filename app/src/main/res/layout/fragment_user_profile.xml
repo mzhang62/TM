@@ -5,10 +5,149 @@
     android:layout_height="match_parent"
     tools:context=".user_profile">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/profile_string" />
+        android:orientation="vertical">
+
+        <!-- logo , profile name , email-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- logo -->
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/apple_icon"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="vertical">
+
+                <!-- profile name -->
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:textAlignment="center"
+                    android:textSize="40sp"
+                    android:text="NAME"/>
+
+                <!-- email -->
+                <TextView
+                    android:id="@+id/user_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="hwang108@ucsc.edu"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Institution -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="Institution"/>
+
+            <TextView
+                android:id="@+id/Institution"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:text="UCSC"/>
+        </LinearLayout>
+
+        <!-- bio -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="Bio"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:textSize="20sp"
+                android:gravity="top|left"
+                android:text="I like basketball"/>
+        </LinearLayout>
+
+        <!-- known skill -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="Known skill"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:textSize="20sp"
+                android:gravity="top|left"
+                android:text="java, python, everything in this world"/>
+        </LinearLayout>
+
+        <!-- skills I want to learn -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="skills I want to learn"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:textSize="20sp"
+                android:gravity="top|left"
+                android:text="Nothing, i'm god"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

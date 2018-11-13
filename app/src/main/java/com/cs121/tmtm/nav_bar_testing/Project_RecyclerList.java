@@ -6,6 +6,7 @@ import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +54,14 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
         final ProjectObject this_project = projectList.get(i);
         String projectName = this_project.getProjectName();
         myViewHolder.projectName.setText(projectName);
-        myViewHolder.projectDescription.setText(this_project.getProjectDescription());
-        myViewHolder.projectDescription.setMovementMethod(new ScrollingMovementMethod());
+        String descriptionString = this_project.getProjectDescription();
+        //cut the description if the string is too long
+        Log.i("project", "des length original is:" + descriptionString.length());
+        if(descriptionString.length() > 90){
+            descriptionString = descriptionString.substring(0, 90 )+ " ...";
+        }
+        Log.i("project", "des length after is:" + descriptionString.length());
+        myViewHolder.projectDescription.setText(descriptionString);
 
         myViewHolder.projectMembers.setText(this_project.getProjectMembers().size() + "/" + this_project.getGroupCapacity());
         int projectStatus = this_project.getProjectAcceptedStatus();

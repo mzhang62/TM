@@ -3,6 +3,7 @@ package com.cs121.tmtm.nav_bar_testing;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,8 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -38,9 +42,11 @@ public class class_page extends Fragment {
     private static final int DENIED = -1;
     private static final int PENDING = 0;
     private DatabaseReference projectReference;
+    private ArrayList<ProjectObject> projects;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private RecyclerView myView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -92,26 +98,42 @@ public class class_page extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_class_page, container, false);
         //reference to recyclerView
-        RecyclerView myView = (RecyclerView) rootView.findViewById(R.id.projectView);
+        myView = (RecyclerView) rootView.findViewById(R.id.projectView);
         myView.setLayoutManager(new LinearLayoutManager(getActivity()));
         projectReference = FirebaseDatabase.getInstance().getReference("Projects");
-        ArrayList<ProjectObject> projects = new ArrayList<>();
-        String projectID = projectReference.push().getKey();
-        String projectName = "TA Master";
-        ArrayList<String> members = new ArrayList<>();
-        members.add("Haofan");
-        members.add("Michael");
-        members.add("Yun Duo");
-        members.add("Dun Dun");
-        int projectStatus = PENDING;
-        String projectDescription = "TA Master is a porject management project to easy the life of instructors.\n " +
-                "This APP makes the project approval/denial process much easier and quicker.";
-        int projectMaxMemeber = 4;
-        ProjectObject testingProject = new ProjectObject(projectID,projectName,members,projectStatus,projectDescription,projectMaxMemeber);
-        projects.add(testingProject);
-        projectReference.child(projectID).setValue(testingProject);
-        Project_RecyclerList adaptor = new Project_RecyclerList(projects);
-        myView.setAdapter(adaptor);
+        projects = new ArrayList<>();
+        projectReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                projects.clear();
+                for(DataSnapshot DBprojects : dataSnapshot.getChildren()){
+                    ProjectObject this_project =DBprojects.getValue(ProjectObject.class);
+                    projects.add(this_project);
+                }
+                Project_RecyclerList adaptor = new Project_RecyclerList(projects);
+                myView.setAdapter(adaptor);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+//        String projectID = projectReference.push().getKey();
+//        String projectName = "TA Master";
+//        ArrayList<String> members = new ArrayList<>();
+//        members.add("Haofan");
+//        members.add("Michael");
+//        members.add("Yun Duo");
+//        members.add("Dun Dun");
+//        int projectStatus = PENDING;
+//        String projectDescription = "TA Master is a project management project to easy the life of instructors.  " +
+//                "This APP makes the project approval/denial process much easier and quicker.";
+//        int projectMaxMemeber = 4;
+//        ProjectObject testingProject = new ProjectObject(projectID,projectName,members,projectStatus,projectDescription,projectMaxMemeber);
+//        projects.add(testingProject);
+//        projectReference.child(projectID).setValue(testingProject);
+
         myView.setItemAnimator(new DefaultItemAnimator());
 
         return rootView;

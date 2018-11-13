@@ -16,6 +16,8 @@ public class ProjectObject implements Parcelable {
     private String projectDescription;
     private int groupCapacity;
 
+    public ProjectObject(){}
+
     public ProjectObject(String projectID, String projectName, ArrayList<String> projectMembers,
                          int projectAcceptedStatus, String projectDescription, int groupCapacity) {
         this.projectID = projectID;

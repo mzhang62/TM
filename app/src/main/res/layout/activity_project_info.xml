@@ -11,7 +11,8 @@
     <!-- image, title, description -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <!-- image -->
@@ -40,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="5dp"
+                android:textSize="20sp"
                 android:text="Project Members" />
         </LinearLayout>
 
@@ -49,8 +51,9 @@
     <TextView
         android:id="@+id/long_des"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="280dp"
         android:text="Project Descriptions"
+        android:layout_margin="10dp"
         android:textSize="20sp" />
 
     <!-- add note -->
@@ -58,6 +61,7 @@
         android:id="@+id/addNote"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:layout_margin="10dp"
         android:textSize="30sp"
         android:hint="Note: ...." />
 
@@ -68,8 +72,8 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/approve"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
             android:layout_marginRight="150dp"
             android:layout_marginLeft="30dp"
             android:text="approve"/>
@@ -77,8 +81,8 @@
 
         <Button
             android:id="@+id/decline"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
             android:layout_marginRight="30dp"
             android:text="decline"/>
     </LinearLayout>

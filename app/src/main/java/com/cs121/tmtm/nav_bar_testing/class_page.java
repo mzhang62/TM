@@ -94,13 +94,10 @@ public class class_page extends Fragment {
         ArrayList<ProjectObject> projects = new ArrayList<>();
         ArrayList<String> members = new ArrayList<>();
         members.add("Tim");
-        ArrayList<String> tags = new ArrayList<>();
-        tags.add("Java");
-        tags.add("HTML");
         for(int i = 0; i < 3; i++) {
-            projects.add(new ProjectObject("12345", "TA Master", members, APPROVED, tags));
-            projects.add(new ProjectObject("12345", "TA Master", members, DENIED, tags));
-            projects.add(new ProjectObject("12345", "TA Master", members, PENDING, tags));
+            projects.add(new ProjectObject("12345", "TA Master", members, APPROVED, "Fun Projet", 4));
+            projects.add(new ProjectObject("12345", "TA Master", members, DENIED, "Fun Projet", 4));
+            projects.add(new ProjectObject("12345", "TA Master", members, PENDING, "Fun Projet", 4));
         }
         Project_RecyclerList adaptor = new Project_RecyclerList(projects);
         myView.setAdapter(adaptor);

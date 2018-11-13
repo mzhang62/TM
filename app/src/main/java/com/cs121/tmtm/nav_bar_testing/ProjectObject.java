@@ -13,15 +13,17 @@ public class ProjectObject implements Parcelable {
     private ArrayList<String> projectMembers;
     //approved: 1; denied: -1; pending:0
     private int projectAcceptedStatus;
-    private ArrayList<String> projectTags;
+    private String projectDescription;
+    private int groupCapacity;
 
     public ProjectObject(String projectID, String projectName, ArrayList<String> projectMembers,
-                         int projectAcceptedStatus, ArrayList<String> projectTags) {
+                         int projectAcceptedStatus, String projectDescription, int groupCapacity) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.projectMembers = projectMembers;
         this.projectAcceptedStatus = projectAcceptedStatus;
-        this.projectTags = projectTags;
+        this.projectDescription = projectDescription;
+        this.groupCapacity = groupCapacity;
     }
 
     protected ProjectObject(Parcel in) {
@@ -29,7 +31,8 @@ public class ProjectObject implements Parcelable {
         projectName = in.readString();
         projectMembers = in.createStringArrayList();
         projectAcceptedStatus = in.readInt();
-        projectTags = in.createStringArrayList();
+        projectDescription = in.readString();
+        groupCapacity = in.readInt();
     }
 
     public static final Creator<ProjectObject> CREATOR = new Creator<ProjectObject>() {
@@ -57,13 +60,14 @@ public class ProjectObject implements Parcelable {
     }
 
 
-    public ArrayList<String> getProjectTags() {
-        return projectTags;
-    }
-
     public void setProjectMembers(ArrayList<String> projectMembers) {
         this.projectMembers = projectMembers;
     }
+
+    public String getProjectDescription() {
+        return projectDescription;
+    }
+
 
     public void setProjectAcceptedStatus(int projectAcceptedStatus) {
         this.projectAcceptedStatus = projectAcceptedStatus;
@@ -73,6 +77,11 @@ public class ProjectObject implements Parcelable {
 
         return projectAcceptedStatus;
     }
+
+    public int getGroupCapacity() {
+        return groupCapacity;
+    }
+
 
     @Override
     public int describeContents() {
@@ -85,7 +94,8 @@ public class ProjectObject implements Parcelable {
         parcel.writeString(projectName);
         parcel.writeStringList(projectMembers);
         parcel.writeInt(projectAcceptedStatus);
-        parcel.writeStringList(projectTags);
+        parcel.writeString(projectDescription);
+        parcel.writeInt(groupCapacity);
     }
 }
 

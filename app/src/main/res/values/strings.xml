@@ -9,4 +9,7 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="classPage_string">Class Page is here.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

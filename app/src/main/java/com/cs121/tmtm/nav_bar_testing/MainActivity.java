@@ -1,32 +1,32 @@
 package com.cs121.tmtm.nav_bar_testing;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity
 implements user_profile.OnFragmentInteractionListener, create_project.OnFragmentInteractionListener,
-class_page.OnFragmentInteractionListener{
+class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionListener{
 
-
+    private FirebaseAuth mAuth;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,12 @@ class_page.OnFragmentInteractionListener{
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if(!checkUserStatus()){
+            navigateToActivity(loginActivity.class);
+        }
+
+
 
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -115,6 +121,9 @@ class_page.OnFragmentInteractionListener{
             case R.id.nav_class:
                 fragmentClass = class_page.class;
                 break;
+            case R.id.nav_logout:
+                fragmentClass = LogoutFragment.class;
+                break;
 
             default:
                 fragmentClass = user_profile.class;
@@ -150,4 +159,21 @@ class_page.OnFragmentInteractionListener{
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    public void navigateToActivity(Class c){
+        Intent intent = new Intent(this, c);
+        startActivity(intent);
+    }
+
+    public boolean checkUserStatus(){
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser == null ){
+            return false;
+        }
+        return true;
+    }
+
 }

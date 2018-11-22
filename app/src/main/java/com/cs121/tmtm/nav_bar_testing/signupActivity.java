@@ -1,5 +1,6 @@
 package com.cs121.tmtm.nav_bar_testing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ public class signupActivity extends AppCompatActivity {
     private EditText nameEditText;
     private Button signupButton;
     private FirebaseAuth mAuth;
+    private String userRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +37,21 @@ public class signupActivity extends AppCompatActivity {
         nameEditText = (EditText) findViewById(R.id.nameEditText);
         signupButton = (Button) findViewById(R.id.signup2Button);
         mAuth = FirebaseAuth.getInstance();
+        userRole = getIntent().getStringExtra("user");
+        Log.i("user", "Current user role in signup is: " + userRole);
 
 
-        signupButton.setOnClickListener(new View.OnClickListener(){
+        signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
+                //check user-entered fields' validity
                 if (email2EditText.getText().toString().trim().length() == 0) {
                     Toast.makeText(signupActivity.this, "Please enter email", Toast.LENGTH_SHORT).show();
                 } else if (password2EditText.getText().toString().trim().length() == 0) {
                     Toast.makeText(signupActivity.this, "Please enter password", Toast.LENGTH_SHORT).show();
                 } else if (!password2EditText.getText().toString().equals(password3EditText.getText().toString())) {
                     Toast.makeText(signupActivity.this, "Please confirm your password", Toast.LENGTH_SHORT).show();
-                } else {
+                } else { //start saving new user
                     String email = email2EditText.getText().toString();
                     String password = password3EditText.getText().toString();
                     mAuth.createUserWithEmailAndPassword(email, password)
@@ -56,9 +61,12 @@ public class signupActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d("Signup", "createUserWithEmail:success");
-
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        addUserToDB();
+                                        if ("student".equals(userRole)) {
+                                            addStudentToDB(user);
+                                        } else if ("instructor".equals(userRole)) {
+                                            addInstructorToDB(user);
+                                        }
                                         finish();
                                     } else {
                                         Log.w("Signup", "createUserWithEmail:failure", task.getException());
@@ -72,13 +80,24 @@ public class signupActivity extends AppCompatActivity {
         });
     }
 
-    public void addUserToDB() {
-        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users");
+    private void addInstructorToDB(FirebaseUser user) {
+        DatabaseReference instructorReference = FirebaseDatabase.getInstance().getReference("Instructor");
         String user_email = email2EditText.getText().toString().trim();
         String user_name = nameEditText.getText().toString().trim();
-        String projectID = userReference.push().getKey();
-        UserObject user = new UserObject(user_name, user_email, "UCSC", "coding", "dancing");
-        userReference.child(projectID).setValue(user);
-        Toast.makeText(signupActivity.this, "You've created a new project!", Toast.LENGTH_SHORT).show();
+        String userID = user.getUid();
+        InstructorObject new_user = new InstructorObject(user_name, user_email, "");
+        instructorReference.child(userID).setValue(new_user);
+        Toast.makeText(signupActivity.this, "You've created a new instructor account!", Toast.LENGTH_SHORT).show();
     }
+
+    private void addStudentToDB(FirebaseUser user) {
+        DatabaseReference studentReference = FirebaseDatabase.getInstance().getReference("Student");
+        String user_email = email2EditText.getText().toString().trim();
+        String user_name = nameEditText.getText().toString().trim();
+        String userID = user.getUid();
+        StudentObject new_user = new StudentObject(user_name, user_email, "", "", "");
+        studentReference.child(userID).setValue(new_user);
+        Toast.makeText(signupActivity.this, "You've created a new student account!", Toast.LENGTH_SHORT).show();
+    }
+
 }

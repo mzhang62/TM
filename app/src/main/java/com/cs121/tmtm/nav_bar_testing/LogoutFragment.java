@@ -103,8 +103,6 @@ public class LogoutFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -113,12 +111,13 @@ public class LogoutFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.confirmLogoutButton:
                 FirebaseAuth.getInstance().signOut();
-                 Intent intent = new Intent(getContext(), loginActivity.class);
-                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Intent intent = new Intent(getContext(), UserRoleSelectionActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                getActivity().finish();
                 break;
         }
     }

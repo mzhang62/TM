@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class MainActivity extends AppCompatActivity
+public class Instructor_MainActivity extends AppCompatActivity
 implements user_profile.OnFragmentInteractionListener, create_project.OnFragmentInteractionListener,
 class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionListener{
 
@@ -32,7 +32,7 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.instructor_activity_main);
         //use fragment transaction to switch between fragment
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
@@ -44,7 +44,8 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
         setSupportActionBar(toolbar);
 
         if(!checkUserStatus()){
-            navigateToActivity(loginActivity.class);
+            navigateToActivity(UserRoleSelectionActivity.class);
+            finish();
         }
 
 

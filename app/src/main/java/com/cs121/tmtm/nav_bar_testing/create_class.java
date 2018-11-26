@@ -3,7 +3,6 @@ package com.cs121.tmtm.nav_bar_testing;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -13,34 +12,37 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.common.data.DataBufferObserverSet;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link create_project.OnFragmentInteractionListener} interface
+ * {@link create_class.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link create_project#newInstance} factory method to
+ * Use the {@link create_class#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class create_project extends Fragment implements View.OnClickListener {
+public class create_class extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final int PENDING = 0;
+    private FirebaseAuth mAuth;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public create_project() {
+    public create_class() {
         // Required empty public constructor
     }
 
@@ -50,11 +52,11 @@ public class create_project extends Fragment implements View.OnClickListener {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment create_project.
+     * @return A new instance of fragment create_class.
      */
     // TODO: Rename and change types and number of parameters
-    public static create_project newInstance(String param1, String param2) {
-        create_project fragment = new create_project();
+    public static create_class newInstance(String param1, String param2) {
+        create_class fragment = new create_class();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,7 +77,8 @@ public class create_project extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_create_project, container, false);
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_create_class, container, false);
         Button createButton = (Button) rootView.findViewById(R.id.create);
         Button cancelButton = (Button) rootView.findViewById(R.id.cancel);
         createButton.setOnClickListener(this);
@@ -89,7 +92,6 @@ public class create_project extends Fragment implements View.OnClickListener {
             mListener.onFragmentInteraction(uri);
         }
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -113,7 +115,7 @@ public class create_project extends Fragment implements View.OnClickListener {
         //create and cancel onClick handler
         switch (view.getId()) {
             case R.id.create:
-                addProjectToDB();
+                addClassToDB();
                 break;
             case R.id.cancel:
                 FragmentTransaction cancel = getFragmentManager().beginTransaction();
@@ -122,42 +124,38 @@ public class create_project extends Fragment implements View.OnClickListener {
                 break;
         }
     }
-
-    public void addProjectToDB() {
-        DatabaseReference projectReference = FirebaseDatabase.getInstance().getReference("Projects");
+    public void addClassToDB() {
+        DatabaseReference classReference = FirebaseDatabase.getInstance().getReference("Class");
+        FirebaseUser user = mAuth.getInstance().getCurrentUser();
         View rootView = getView();
-        EditText projectTitle = (EditText) rootView.findViewById(R.id.enter_name);
-        EditText projectDescription = (EditText) rootView.findViewById(R.id.enter_des);
-        EditText projectMaxMembers = (EditText) rootView.findViewById(R.id.enter_capacity);
-        ArrayList<String> members = new ArrayList<>();
-        members.add("Haofan");
-        String projectID = projectReference.push().getKey();
-        String projectName = projectTitle.getText().toString().trim();
-        String StringMax = projectMaxMembers.getText().toString().trim();
-        String projectDes = projectDescription.getText().toString().trim();
-        if (projectDes.equals("") || projectName.equals("") || StringMax.equals("")) {
+        EditText classTitle = (EditText) rootView.findViewById(R.id.enter_name);
+        EditText classDescription = (EditText) rootView.findViewById(R.id.enter_des);
+        String classID = classReference.push().getKey();
+        String className = classTitle.getText().toString().trim();
+        String classDes = classDescription.getText().toString().trim();
+        if (classDes.equals("") || className.equals("")) {
             Toast.makeText(getActivity(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return;
         }
-        int projectMax = Integer.parseInt(StringMax);
-        ProjectObject this_project = new ProjectObject(projectID, projectName, members, PENDING, projectDes, projectMax);
-        projectReference.child(projectID).setValue(this_project);
-        Toast.makeText(getActivity(), "You've created a new project!", Toast.LENGTH_SHORT).show();
+        ArrayList<String> instructor_array = new ArrayList<>();
+        instructor_array.add(user.getUid());
+        ArrayList<String> student_array = new ArrayList<>();
+        ArrayList<String> project_array = new ArrayList<>();
+        ClassObject this_class = new ClassObject(classID, className,classDes, instructor_array, student_array,project_array);
+        classReference.child(classID).setValue(this_class);
+        Toast.makeText(getActivity(), "You've created a new class!", Toast.LENGTH_SHORT).show();
         clearFields();
         FragmentTransaction fr = getFragmentManager().beginTransaction();
         fr.replace(R.id.flContent, new class_page());
         fr.commit();
-
     }
 
     public void clearFields() {
         View rootView = getView();
         EditText projectTitle = (EditText) rootView.findViewById(R.id.enter_name);
         EditText projectDescription = (EditText) rootView.findViewById(R.id.enter_des);
-        EditText projectMaxMembers = (EditText) rootView.findViewById(R.id.enter_capacity);
         projectTitle.getText().clear();
         projectDescription.getText().clear();
-        projectMaxMembers.getText().clear();
     }
 
     /**

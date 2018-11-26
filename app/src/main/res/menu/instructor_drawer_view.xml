@@ -3,14 +3,15 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_profile"
-            android:title="My profile" />
-        <item
-            android:id="@+id/nav_project"
-            android:title="Create a new project" />
-        <item
             android:id="@+id/nav_class"
             android:title="Class Page" />
+        <item
+            android:id="@+id/nav_new_class"
+            android:title="Create Course" />
+
+        <item
+            android:id="@+id/nav_profile"
+            android:title="My Profile" />
 
         <item
             android:id="@+id/nav_logout"

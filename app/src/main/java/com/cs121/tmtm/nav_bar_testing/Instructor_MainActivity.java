@@ -20,8 +20,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class Instructor_MainActivity extends AppCompatActivity
-implements user_profile.OnFragmentInteractionListener, create_project.OnFragmentInteractionListener,
-class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionListener{
+implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInteractionListener,
+        LogoutFragment.OnFragmentInteractionListener, create_class.OnFragmentInteractionListener{
 
     private FirebaseAuth mAuth;
     private DrawerLayout mDrawer;
@@ -36,7 +36,7 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
         //use fragment transaction to switch between fragment
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        fragmentTransaction.add(R.id.flContent, new create_project());
+        fragmentTransaction.add(R.id.flContent, new create_class());
         fragmentTransaction.commit();
 
         // Set a Toolbar to replace the ActionBar.
@@ -115,15 +115,15 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
+        // Create a new fragment and specify the fragment to show based on the nav item clicked
         Fragment fragment = null;
         Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.nav_profile:
                 fragmentClass = user_profile.class;
                 break;
-            case R.id.nav_project:
-                fragmentClass = create_project.class;
+            case R.id.nav_new_class:
+                fragmentClass = create_class.class;
                 break;
             case R.id.nav_class:
                 fragmentClass = class_page.class;

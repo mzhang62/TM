@@ -1,20 +1,29 @@
 package com.cs121.tmtm.nav_bar_testing;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Instructor Object to store instructor-user information into the FireBase.
  */
 public class InstructorObject {
+    private String uid;
     private String name;
     private String email;
-    private String institution;
+    private ArrayList<String> myClass;
 
     public InstructorObject() {
     }
 
-    public InstructorObject(String name, String email, String institution) {
+    public InstructorObject(String uid, String name, String email, ArrayList<String> myClass) {
+        this.uid = uid;
         this.name = name;
         this.email = email;
-        this.institution = institution;
+        this.myClass = myClass;
+    }
+
+    public String getUid() {
+        return uid;
     }
 
     public String getName() {
@@ -25,8 +34,8 @@ public class InstructorObject {
         return email;
     }
 
-    public String getInstitution() {
-        return institution;
+    public ArrayList<String> getMyClass() {
+        return myClass;
     }
 }
 

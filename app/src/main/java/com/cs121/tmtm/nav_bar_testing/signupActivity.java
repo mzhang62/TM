@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class signupActivity extends AppCompatActivity {
     private EditText email2EditText;
     private EditText password2EditText;
@@ -85,7 +87,8 @@ public class signupActivity extends AppCompatActivity {
         String user_email = email2EditText.getText().toString().trim();
         String user_name = nameEditText.getText().toString().trim();
         String userID = user.getUid();
-        InstructorObject new_user = new InstructorObject(user_name, user_email, "");
+        ArrayList<String> myClass = new ArrayList<>();
+        InstructorObject new_user = new InstructorObject(userID, user_name, user_email, myClass);
         instructorReference.child(userID).setValue(new_user);
         Toast.makeText(signupActivity.this, "You've created a new instructor account!", Toast.LENGTH_SHORT).show();
     }
@@ -95,7 +98,9 @@ public class signupActivity extends AppCompatActivity {
         String user_email = email2EditText.getText().toString().trim();
         String user_name = nameEditText.getText().toString().trim();
         String userID = user.getUid();
-        StudentObject new_user = new StudentObject(user_name, user_email, "", "", "");
+        ArrayList<String> myClass = new ArrayList<>();
+        ArrayList<String> myProject = new ArrayList<>();
+        StudentObject new_user = new StudentObject(userID,user_name, user_email, myClass, myProject);
         studentReference.child(userID).setValue(new_user);
         Toast.makeText(signupActivity.this, "You've created a new student account!", Toast.LENGTH_SHORT).show();
     }

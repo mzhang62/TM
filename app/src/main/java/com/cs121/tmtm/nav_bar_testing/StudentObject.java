@@ -1,24 +1,31 @@
 package com.cs121.tmtm.nav_bar_testing;
 
+import java.util.ArrayList;
+
 /**
  * Student Object to user student-user information into the FireBase.
  */
 public class StudentObject {
+    private String uid;
     private String name;
     private String email;
-    private String institution;
-    private String knownSkill;
-    private String unknownSkill;
+    private ArrayList<String> myClass;
+    private ArrayList<String> myProject;
 
     public StudentObject() {
     }
 
-    public StudentObject(String name, String email, String institution, String knownSkill, String unknownSkill) {
+    public StudentObject(String uid, String name, String email, ArrayList<String> myClass,
+                         ArrayList<String> myProject) {
+        this.uid = uid;
         this.name = name;
         this.email = email;
-        this.institution = institution;
-        this.knownSkill = knownSkill;
-        this.unknownSkill = unknownSkill;
+        this.myClass = myClass;
+        this.myProject = myProject;
+    }
+
+    public String getUid() {
+        return uid;
     }
 
     public String getName() {
@@ -29,15 +36,11 @@ public class StudentObject {
         return email;
     }
 
-    public String getInstitution() {
-        return institution;
+    public ArrayList<String> getMyClass() {
+        return myClass;
     }
 
-    public String getKnownSkill() {
-        return knownSkill;
-    }
-
-    public String getUnknownSkill() {
-        return unknownSkill;
+    public ArrayList<String> getMyProject() {
+        return myProject;
     }
 }

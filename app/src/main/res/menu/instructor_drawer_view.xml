@@ -8,6 +8,9 @@
         <item
             android:id="@+id/nav_new_class"
             android:title="Create Course" />
+        <item
+            android:id="@+id/nav_join_class"
+            android:title="Join Course" />
 
         <item
             android:id="@+id/nav_profile"

@@ -21,7 +21,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Instructor_MainActivity extends AppCompatActivity
 implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInteractionListener,
-        LogoutFragment.OnFragmentInteractionListener, create_class.OnFragmentInteractionListener{
+        LogoutFragment.OnFragmentInteractionListener, create_class.OnFragmentInteractionListener,
+        InstructorJoinClassFragment.OnFragmentInteractionListener{
 
     private FirebaseAuth mAuth;
     private DrawerLayout mDrawer;
@@ -130,6 +131,9 @@ implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInte
                 break;
             case R.id.nav_logout:
                 fragmentClass = LogoutFragment.class;
+                break;
+            case R.id.nav_join_class:
+                fragmentClass = InstructorJoinClassFragment.class;
                 break;
 
             default:

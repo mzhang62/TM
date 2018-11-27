@@ -3,8 +3,9 @@ package com.cs121.tmtm.nav_bar_testing;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,35 +15,35 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link create_class.OnFragmentInteractionListener} interface
+ * {@link InstructorJoinClassFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link create_class#newInstance} factory method to
+ * Use the {@link InstructorJoinClassFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class create_class extends Fragment implements View.OnClickListener {
+public class InstructorJoinClassFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private FirebaseAuth mAuth;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser this_user = mAuth.getCurrentUser();
 
     private OnFragmentInteractionListener mListener;
 
-    public create_class() {
+    public InstructorJoinClassFragment() {
         // Required empty public constructor
     }
 
@@ -52,11 +53,11 @@ public class create_class extends Fragment implements View.OnClickListener {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment create_class.
+     * @return A new instance of fragment InstructorJoinClassFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static create_class newInstance(String param1, String param2) {
-        create_class fragment = new create_class();
+    public static InstructorJoinClassFragment newInstance(String param1, String param2) {
+        InstructorJoinClassFragment fragment = new InstructorJoinClassFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -77,12 +78,9 @@ public class create_class extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_create_class, container, false);
-        Button createButton = (Button) rootView.findViewById(R.id.create);
-        Button cancelButton = (Button) rootView.findViewById(R.id.cancel);
-        createButton.setOnClickListener(this);
-        cancelButton.setOnClickListener(this);
+        View rootView = inflater.inflate(R.layout.fragment_join_class, container, false);
+        Button joinButton = (Button) rootView.findViewById(R.id.joinClassBtn);
+        joinButton.setOnClickListener(this);
         return rootView;
     }
 
@@ -112,51 +110,40 @@ public class create_class extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        //create and cancel onClick handler
         switch (view.getId()) {
-            case R.id.create:
-                addClassToDB();
-                break;
-            case R.id.cancel:
-                FragmentTransaction cancel = getFragmentManager().beginTransaction();
-                cancel.replace(R.id.flContent, new class_page());
-                cancel.commit();
+            case R.id.joinClassBtn:
+                addInstructorToClass();
                 break;
         }
-    }
-    public void addClassToDB() {
-        DatabaseReference classReference = FirebaseDatabase.getInstance().getReference("Class");
-        FirebaseUser user = mAuth.getInstance().getCurrentUser();
-        View rootView = getView();
-        EditText classTitle = (EditText) rootView.findViewById(R.id.enter_name);
-        EditText classDescription = (EditText) rootView.findViewById(R.id.enter_des);
-        String classID = classReference.push().getKey();
-        String className = classTitle.getText().toString().trim();
-        String classDes = classDescription.getText().toString().trim();
-        if (classDes.equals("") || className.equals("")) {
-            Toast.makeText(getActivity(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        ArrayList<String> instructor_array = new ArrayList<>();
-        ArrayList<String> student_array = new ArrayList<>();
-        ArrayList<String> project_array = new ArrayList<>();
-        ClassObject this_class = new ClassObject(classID, className,classDes, instructor_array, student_array,project_array);
-        classReference.child(classID).setValue(this_class);
-        classReference.child(classID).child("classInstructor").child(user.getUid()).setValue(true);
-        Toast.makeText(getActivity(), "You've created a new class!", Toast.LENGTH_SHORT).show();
-        clearFields();
-        FragmentTransaction fr = getFragmentManager().beginTransaction();
-        fr.replace(R.id.flContent, new class_page());
-        fr.commit();
     }
 
-    public void clearFields() {
+    private void addInstructorToClass() {
         View rootView = getView();
-        EditText projectTitle = (EditText) rootView.findViewById(R.id.enter_name);
-        EditText projectDescription = (EditText) rootView.findViewById(R.id.enter_des);
-        projectTitle.getText().clear();
-        projectDescription.getText().clear();
+        EditText classCode = (EditText) rootView.findViewById(R.id.codeText);
+        String class_Code = classCode.getText().toString();
+
+        FirebaseDatabase.getInstance().getReference("Instructor").child(this_user.getUid())
+                .child("myClass").child(class_Code).setValue(true);
+
+        FirebaseDatabase.getInstance().getReference("Class").child(class_Code)
+                .child("classInstructor").child(this_user.getUid()).setValue(true);
+        Toast.makeText(getActivity(), "You've been added to the class!!!!", Toast.LENGTH_SHORT).show();
     }
+
+    private void addStudentToClass() {
+        View rootView = getView();
+        EditText classCode = (EditText) rootView.findViewById(R.id.codeText);
+        String class_Code = classCode.getText().toString();
+
+        FirebaseDatabase.getInstance().getReference("Student").child(this_user.getUid())
+                .child("myClass").child(class_Code).setValue(true);
+
+        FirebaseDatabase.getInstance().getReference("Class").child(class_Code)
+                .child("classStudent").child(this_user.getUid()).setValue(true);
+        Toast.makeText(getActivity(), "You've been added to the class as an instructor.", Toast.LENGTH_SHORT).show();
+
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

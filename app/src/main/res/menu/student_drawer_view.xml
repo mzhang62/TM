@@ -10,6 +10,9 @@
         <item
             android:id="@+id/nav_project"
             android:title="Create a new project" />
+        <item
+            android:id="@+id/nav_join_class"
+            android:title="Join Course" />
 
         <item
             android:id="@+id/nav_profile"

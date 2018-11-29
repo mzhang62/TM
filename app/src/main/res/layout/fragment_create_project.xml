@@ -21,10 +21,28 @@
             android:layout_marginBottom="10dp"
             android:textAlignment="center"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:text="Choose Class"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <Spinner
+                android:id="@+id/my_Class"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></Spinner>
+
+        </LinearLayout>
+
         <!-- title and project name -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="65dp"
             android:orientation="horizontal">
 
             <TextView
@@ -44,33 +62,10 @@
                 android:hint="enter name"/>
         </LinearLayout>
 
-        <!-- title and project tagline -->
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_width="140dp"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_marginLeft="5dp"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:text="Project Tagline"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:textSize="15sp"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:textStyle="bold" />&ndash;&gt;-->
-
-            <!--&lt;!&ndash;<EditText&ndash;&gt;-->
-                <!--&lt;!&ndash;android:id="@+id/enter_tagline"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:textSize="20sp"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:hint="enter tagline"/>&ndash;&gt;-->
-        <!--</LinearLayout>-->
-
         <!-- title and edit text -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="65dp"
             android:orientation="horizontal">
 
             <TextView
@@ -98,7 +93,7 @@
         <!-- title and description -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="330dp"
+            android:layout_height="300dp"
             android:orientation="horizontal">
 
             <TextView

@@ -3,21 +3,32 @@ package com.cs121.tmtm.nav_bar_testing;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.common.data.DataBufferObserverSet;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -37,8 +48,12 @@ public class create_project extends Fragment implements View.OnClickListener {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private FirebaseAuth mAuth;
     private OnFragmentInteractionListener mListener;
+    private ArrayList<String> projectIDArray;
+    private List<String> spinnerArray;
+    private Spinner my_class;
+
 
     public create_project() {
         // Required empty public constructor
@@ -75,11 +90,56 @@ public class create_project extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_create_project, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_create_project, container, false);
         Button createButton = (Button) rootView.findViewById(R.id.create);
         Button cancelButton = (Button) rootView.findViewById(R.id.cancel);
         createButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
+        spinnerArray = new ArrayList<>();
+        FirebaseUser user = mAuth.getInstance().getCurrentUser();
+        DatabaseReference studentReference = FirebaseDatabase.getInstance().getReference("Student");
+        final DatabaseReference classReference = FirebaseDatabase.getInstance().getReference("Class");
+        my_class = rootView.findViewById(R.id.my_Class);
+        //fill the class names into the spinner
+        studentReference.child(user.getUid()).child("myClass").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                spinnerArray.clear();
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot myClass : dataSnapshot.getChildren()){
+                        String classID = myClass.getKey();
+                        classReference.child(classID).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.exists()){
+                                    String classTitle = dataSnapshot.child("classTitle").getValue(String.class);
+                                    String classID = dataSnapshot.child("classID").getValue(String.class);
+                                    String displayClassName = classTitle + " " + classID;
+                                    spinnerArray.add(displayClassName);
+                                }
+                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                                        rootView.getContext(), android.R.layout.simple_spinner_item, spinnerArray);
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                my_class.setAdapter(adapter);
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         return rootView;
     }
 
@@ -124,13 +184,21 @@ public class create_project extends Fragment implements View.OnClickListener {
     }
 
     public void addProjectToDB() {
+        FirebaseUser user = mAuth.getInstance().getCurrentUser();
+        //database references
         DatabaseReference projectReference = FirebaseDatabase.getInstance().getReference("Projects");
+        DatabaseReference studentReference = FirebaseDatabase.getInstance().getReference("Student");
+        DatabaseReference classReference = FirebaseDatabase.getInstance().getReference("Class");
+        //get the rootView of this fragment
         View rootView = getView();
+        //link the UI elements
         EditText projectTitle = (EditText) rootView.findViewById(R.id.enter_name);
         EditText projectDescription = (EditText) rootView.findViewById(R.id.enter_des);
         EditText projectMaxMembers = (EditText) rootView.findViewById(R.id.enter_capacity);
+        Spinner projectClassID = (Spinner) rootView.findViewById(R.id.my_Class);
+        //add project under "Project" branch
         ArrayList<String> members = new ArrayList<>();
-        members.add("Haofan");
+        members.add(user.getDisplayName());
         String projectID = projectReference.push().getKey();
         String projectName = projectTitle.getText().toString().trim();
         String StringMax = projectMaxMembers.getText().toString().trim();
@@ -141,7 +209,17 @@ public class create_project extends Fragment implements View.OnClickListener {
         }
         int projectMax = Integer.parseInt(StringMax);
         ProjectObject this_project = new ProjectObject(projectID, projectName, members, PENDING, projectDes, projectMax);
+        //add the project object under the Project branch
         projectReference.child(projectID).setValue(this_project);
+        //add project record into user's own branch
+        studentReference.child(user.getUid()).child("myProject").child(projectID).setValue(true);
+        //get the selected item from the spinner;
+        String[] selectedClass = projectClassID.getSelectedItem().toString().split(" ");
+        String selectedClassID = selectedClass[1];
+        Log.i("Spinner value", "The selected value is " + selectedClassID);
+        //add the project ID under the class branch
+        classReference.child(selectedClassID).child("classProject").child(projectID).setValue(true);
+
         Toast.makeText(getActivity(), "You've created a new project!", Toast.LENGTH_SHORT).show();
         clearFields();
         FragmentTransaction fr = getFragmentManager().beginTransaction();

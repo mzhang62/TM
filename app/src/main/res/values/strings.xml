@@ -9,6 +9,13 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="classPage_string">Class Page is here.</string>
+    <string-array name="classarray">
+        <item> </item>
+        <item>CMPS115</item>
+        <item>CMPS116</item>
+        <item>CMPS117</item>
+        <item>CMPS121</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -126,6 +126,8 @@ public class create_class extends Fragment implements View.OnClickListener {
     }
     public void addClassToDB() {
         DatabaseReference classReference = FirebaseDatabase.getInstance().getReference("Class");
+        DatabaseReference instructorReference = FirebaseDatabase.getInstance().getReference("Instructor");
+
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
         View rootView = getView();
         EditText classTitle = (EditText) rootView.findViewById(R.id.enter_name);
@@ -143,6 +145,7 @@ public class create_class extends Fragment implements View.OnClickListener {
         ClassObject this_class = new ClassObject(classID, className,classDes, instructor_array, student_array,project_array);
         classReference.child(classID).setValue(this_class);
         classReference.child(classID).child("classInstructor").child(user.getUid()).setValue(true);
+        instructorReference.child(user.getUid()).child("myClass").child(classID).setValue(true);
         Toast.makeText(getActivity(), "You've created a new class!", Toast.LENGTH_SHORT).show();
         clearFields();
         FragmentTransaction fr = getFragmentManager().beginTransaction();

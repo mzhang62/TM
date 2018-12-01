@@ -103,32 +103,41 @@ public class Student_project_page_fragment extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        projects.clear();
+                        //array list to store all user's project in this class
+                        final ArrayList<String> projectIDs = new ArrayList<>();
                         if (dataSnapshot.exists()) {
+                            //traverse through all user's projects, and only select the one in this class
                             for (DataSnapshot myProjects : dataSnapshot.getChildren()) {
                                 String this_project_classID = myProjects.getValue(String.class);
                                 //if this project that I'm associated with belong to this class, display it
                                 if (finalClassID.equals(this_project_classID)) {
-                                    //fetch this project's ID and find it under "Projects" branch in DB
                                     String projectID = myProjects.getKey();
-                                    projectReference.child(projectID).addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            if (dataSnapshot.exists()) {
-                                                ProjectObject this_project = dataSnapshot.getValue(ProjectObject.class);
-                                                projects.add(this_project);
-                                            }
-                                            Project_RecyclerList adaptor = new Project_RecyclerList(projects);
-                                            myView.setAdapter(adaptor);
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                        }
-                                    });
+                                    projectIDs.add(projectID);
                                 }
+
                             }
+
+                            //after fetching all relevant IDs, display them
+                            projectReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    projects.clear();
+                                    for(String this_ID : projectIDs){
+                                        if(dataSnapshot.child(this_ID).exists()){
+                                            ProjectObject this_project = dataSnapshot.child(this_ID)
+                                                    .getValue(ProjectObject.class);
+                                            projects.add(this_project);
+                                        }
+                                    }
+                                    Project_RecyclerList adaptor = new Project_RecyclerList(projects);
+                                    myView.setAdapter(adaptor);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                     }
 

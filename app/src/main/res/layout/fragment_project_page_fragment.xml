@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Student_MyCourses_fragment">
+    tools:context=".Student_project_page_fragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/classView"
+        android:id="@+id/student_project_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

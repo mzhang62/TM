@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,44 +12,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link class_page.OnFragmentInteractionListener} interface
+ * {@link Student_MyCourses_fragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link class_page#newInstance} factory method to
+ * Use the {@link Student_MyCourses_fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class class_page extends Fragment {
+public class Student_MyCourses_fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final int APPROVED = 1;
-    private static final int DENIED = -1;
-    private static final int PENDING = 0;
-    private DatabaseReference projectReference;
-    private ArrayList<ProjectObject> projects;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private DatabaseReference classReference;
+    private DatabaseReference studentReference;
+    private ArrayList<String> classes;
     private RecyclerView myView;
+    private FirebaseAuth mAuth;
 
     private OnFragmentInteractionListener mListener;
 
-    public class_page() {
+    public Student_MyCourses_fragment() {
         // Required empty public constructor
     }
 
@@ -60,11 +58,11 @@ public class class_page extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment class_page.
+     * @return A new instance of fragment Student_MyCourses_fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static class_page newInstance(String param1, String param2) {
-        class_page fragment = new class_page();
+    public static Student_MyCourses_fragment newInstance(String param1, String param2) {
+        Student_MyCourses_fragment fragment = new Student_MyCourses_fragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,10 +70,6 @@ public class class_page extends Fragment {
         return fragment;
     }
 
-    /**
-     * This onCreate is different than an Activity's onCreate method
-     * @param savedInstanceState
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,32 +79,30 @@ public class class_page extends Fragment {
         }
     }
 
-    /**
-     * All the views are declared here
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_class_page, container, false);
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_my_courses_fragment, container, false);
         //reference to recyclerView
-        myView = (RecyclerView) rootView.findViewById(R.id.projectView);
+        myView = (RecyclerView) rootView.findViewById(R.id.classView);
         myView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        projectReference = FirebaseDatabase.getInstance().getReference("Projects");
-        projects = new ArrayList<>();
-        projectReference.addValueEventListener(new ValueEventListener() {
+        classReference = FirebaseDatabase.getInstance().getReference("Class");
+        studentReference = FirebaseDatabase.getInstance().getReference("Student");
+        FirebaseUser this_user = mAuth.getInstance().getCurrentUser();
+        classes = new ArrayList<>();
+        studentReference.child(this_user.getUid()).child("myClass").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                projects.clear();
-                for(DataSnapshot DBprojects : dataSnapshot.getChildren()){
-                    ProjectObject this_project =DBprojects.getValue(ProjectObject.class);
-                    projects.add(this_project);
+                classes.clear();
+                for(DataSnapshot myClasses : dataSnapshot.getChildren()){
+                    String classID = myClasses.getKey();
+                    String classTitle = myClasses.getValue(String.class);
+                    String classTitleID = classTitle + " " + classID;
+                    classes.add(classTitleID);
                 }
-                Project_RecyclerList adaptor = new Project_RecyclerList(projects);
+                Student_Class_RecyclerList adaptor = new Student_Class_RecyclerList(classes);
                 myView.setAdapter(adaptor);
             }
 
@@ -129,16 +121,6 @@ public class class_page extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    /**
-     * Treat this as the onCreate method in an activity
-     * @param savedInstanceState
-     */
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
     }
 
     @Override

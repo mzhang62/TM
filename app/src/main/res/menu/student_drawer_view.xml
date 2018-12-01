@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_class"
-            android:title="Class Page"/>
+    <group
+        android:id="@+id/class_actions"
+        android:checkableBehavior="single">
+
+        <!--<item-->
+        <!--android:id="@+id/nav_class"-->
+        <!--android:title="Class Page" />-->
+        <item
+            android:id="@+id/nav_course_page"
+            android:title="Course Page" />
+
         <item
             android:id="@+id/nav_my_project"
             android:title="My project" />
@@ -13,6 +21,10 @@
         <item
             android:id="@+id/nav_join_class"
             android:title="Join Course" />
+    </group>
+    <group
+        android:id="@+id/user_actions"
+        android:checkableBehavior="single">
 
         <item
             android:id="@+id/nav_profile"

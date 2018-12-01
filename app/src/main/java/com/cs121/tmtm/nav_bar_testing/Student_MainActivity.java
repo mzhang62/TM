@@ -17,18 +17,22 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class Student_MainActivity extends AppCompatActivity
 implements user_profile.OnFragmentInteractionListener, create_project.OnFragmentInteractionListener,
 class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionListener,
-        StudentJoinClassFragment.OnFragmentInteractionListener{
+        StudentJoinClassFragment.OnFragmentInteractionListener,
+        Student_MyCourses_fragment.OnFragmentInteractionListener, Student_project_page_fragment.OnFragmentInteractionListener{
 
     private FirebaseAuth mAuth;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,7 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
 
         fragmentTransaction.add(R.id.flContent, new create_project());
         fragmentTransaction.commit();
+
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,7 +74,7 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
         if (savedInstanceState == null) {
             Fragment fragment = null;
             try {
-                 fragment = (Fragment)class_page.class.newInstance();
+                 fragment = (Fragment)Student_MyCourses_fragment.class.newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -126,16 +131,18 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
             case R.id.nav_project:
                 fragmentClass = create_project.class;
                 break;
-            case R.id.nav_my_project:
-                fragmentClass = class_page.class;
-                break;
+//            case R.id.nav_my_project:
+//                fragmentClass = class_page.class;
+//                break;
             case R.id.nav_logout:
                 fragmentClass = LogoutFragment.class;
                 break;
             case R.id.nav_join_class:
                 fragmentClass = StudentJoinClassFragment.class;
                 break;
-
+            case R.id.nav_course_page:
+                fragmentClass = Student_MyCourses_fragment.class;
+                break;
             default:
                 fragmentClass = user_profile.class;
         }

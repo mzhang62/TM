@@ -3,21 +3,35 @@ package com.cs121.tmtm.nav_bar_testing;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link myCourses_fragment.OnFragmentInteractionListener} interface
+ * {@link Instructor_MyCourses_fragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link myCourses_fragment#newInstance} factory method to
+ * Use the {@link Instructor_MyCourses_fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class myCourses_fragment extends Fragment {
+public class Instructor_MyCourses_fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -26,10 +40,15 @@ public class myCourses_fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private DatabaseReference classReference;
+    private DatabaseReference instructorReference;
+    private ArrayList<String> classes;
+    private RecyclerView myView;
+    private FirebaseAuth mAuth;
 
     private OnFragmentInteractionListener mListener;
 
-    public myCourses_fragment() {
+    public Instructor_MyCourses_fragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +58,11 @@ public class myCourses_fragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment myCourses_fragment.
+     * @return A new instance of fragment Student_MyCourses_fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static myCourses_fragment newInstance(String param1, String param2) {
-        myCourses_fragment fragment = new myCourses_fragment();
+    public static Instructor_MyCourses_fragment newInstance(String param1, String param2) {
+        Instructor_MyCourses_fragment fragment = new Instructor_MyCourses_fragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +83,37 @@ public class myCourses_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_courses_fragment, container, false);
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_my_courses_fragment, container, false);
+        //reference to recyclerView
+        myView = (RecyclerView) rootView.findViewById(R.id.classView);
+        myView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        classReference = FirebaseDatabase.getInstance().getReference("Class");
+        instructorReference = FirebaseDatabase.getInstance().getReference("Instructor");
+        FirebaseUser this_user = mAuth.getInstance().getCurrentUser();
+        classes = new ArrayList<>();
+        instructorReference.child(this_user.getUid()).child("myClass").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                classes.clear();
+                for(DataSnapshot myClasses : dataSnapshot.getChildren()){
+                    String classID = myClasses.getKey();
+                    String classTitle = myClasses.getValue(String.class);
+                    String classTitleID = classTitle + " " + classID;
+                    classes.add(classTitleID);
+                }
+                Instructor_Class_RecyclerList adaptor = new Instructor_Class_RecyclerList(classes);
+                myView.setAdapter(adaptor);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        myView.setItemAnimator(new DefaultItemAnimator());
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

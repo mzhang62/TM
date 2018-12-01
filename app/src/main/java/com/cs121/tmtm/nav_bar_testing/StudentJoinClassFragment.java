@@ -3,6 +3,7 @@ package com.cs121.tmtm.nav_bar_testing;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -35,6 +40,7 @@ public class StudentJoinClassFragment extends Fragment implements View.OnClickLi
     private String mParam2;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser this_user = mAuth.getCurrentUser();
+    private DatabaseReference classReference;
 
     private OnFragmentInteractionListener mListener;
 
@@ -128,13 +134,28 @@ public class StudentJoinClassFragment extends Fragment implements View.OnClickLi
     private void addStudentToClass() {
         View rootView = getView();
         EditText classCode = (EditText) rootView.findViewById(R.id.codeText);
-        String class_Code = classCode.getText().toString();
+        final String class_Code = classCode.getText().toString();
+        classReference = FirebaseDatabase.getInstance().getReference("Class").child(class_Code);
+        classReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String classTitle = dataSnapshot.child("classTitle").getValue(String.class);
+                    FirebaseDatabase.getInstance().getReference("Student").child(this_user.getUid())
+                            .child("myClass").child(class_Code).setValue(classTitle);
 
-        FirebaseDatabase.getInstance().getReference("Student").child(this_user.getUid())
-                .child("myClass").child(class_Code).setValue(true);
+                    FirebaseDatabase.getInstance().getReference("Class").child(class_Code)
+                            .child("classStudent").child(this_user.getUid()).setValue(true);
+                }
+            }
 
-        FirebaseDatabase.getInstance().getReference("Class").child(class_Code)
-                .child("classStudent").child(this_user.getUid()).setValue(true);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         Toast.makeText(getActivity(), "You've been added to the class as a student.", Toast.LENGTH_SHORT).show();
 
     }

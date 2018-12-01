@@ -10,7 +10,6 @@ import java.util.List;
 public class ProjectObject implements Parcelable {
     private String projectID;
     private String projectName;
-    private ArrayList<String> projectMembers;
     //approved: 1; denied: -1; pending:0
     private int projectAcceptedStatus;
     private String projectDescription;
@@ -18,11 +17,10 @@ public class ProjectObject implements Parcelable {
 
     public ProjectObject(){}
 
-    public ProjectObject(String projectID, String projectName, ArrayList<String> projectMembers,
+    public ProjectObject(String projectID, String projectName,
                          int projectAcceptedStatus, String projectDescription, int groupCapacity) {
         this.projectID = projectID;
         this.projectName = projectName;
-        this.projectMembers = projectMembers;
         this.projectAcceptedStatus = projectAcceptedStatus;
         this.projectDescription = projectDescription;
         this.groupCapacity = groupCapacity;
@@ -31,7 +29,6 @@ public class ProjectObject implements Parcelable {
     protected ProjectObject(Parcel in) {
         projectID = in.readString();
         projectName = in.readString();
-        projectMembers = in.createStringArrayList();
         projectAcceptedStatus = in.readInt();
         projectDescription = in.readString();
         groupCapacity = in.readInt();
@@ -57,14 +54,6 @@ public class ProjectObject implements Parcelable {
         return projectName;
     }
 
-    public ArrayList<String> getProjectMembers() {
-        return projectMembers;
-    }
-
-
-    public void setProjectMembers(ArrayList<String> projectMembers) {
-        this.projectMembers = projectMembers;
-    }
 
     public String getProjectDescription() {
         return projectDescription;
@@ -94,7 +83,6 @@ public class ProjectObject implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(projectID);
         parcel.writeString(projectName);
-        parcel.writeStringList(projectMembers);
         parcel.writeInt(projectAcceptedStatus);
         parcel.writeString(projectDescription);
         parcel.writeInt(groupCapacity);

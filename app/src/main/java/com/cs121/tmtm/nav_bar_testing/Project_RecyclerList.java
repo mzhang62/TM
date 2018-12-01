@@ -13,6 +13,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 
 public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerList.MyViewHolder> {
@@ -22,6 +28,7 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
     private static final int APPROVED = 1;
     private static final int DENIED = -1;
     private static final int PENDING = 0;
+    private DatabaseReference projectReference;
 
     public Project_RecyclerList(List<ProjectObject> projectList) {
         this.projectList = projectList;
@@ -50,7 +57,7 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Project_RecyclerList.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final Project_RecyclerList.MyViewHolder myViewHolder, int i) {
         final ProjectObject this_project = projectList.get(i);
         String projectName = this_project.getProjectName();
         myViewHolder.projectName.setText(projectName);
@@ -62,8 +69,23 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
         }
         Log.i("project", "des length after is:" + descriptionString.length());
         myViewHolder.projectDescription.setText(descriptionString);
+        //get member number from DB
+        projectReference = FirebaseDatabase.getInstance().getReference("Projects").child(this_project.getProjectID());
+        projectReference.child("projectMembers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    int memberNumber = (int) dataSnapshot.getChildrenCount();
+                    myViewHolder.projectMembers.setText(memberNumber + "/" + this_project.getGroupCapacity());
+                }
+            }
 
-        myViewHolder.projectMembers.setText(this_project.getProjectMembers().size() + "/" + this_project.getGroupCapacity());
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+//        myViewHolder.projectMembers.setText(this_project.getProjectMembers().size() + "/" + this_project.getGroupCapacity());
         int projectStatus = this_project.getProjectAcceptedStatus();
         if(projectStatus == APPROVED){
             myViewHolder.projectStatus.setImageResource(R.drawable.approved_icon);

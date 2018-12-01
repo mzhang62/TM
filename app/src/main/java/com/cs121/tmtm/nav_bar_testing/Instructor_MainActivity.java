@@ -20,9 +20,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class Instructor_MainActivity extends AppCompatActivity
-implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInteractionListener,
+        implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInteractionListener,
         LogoutFragment.OnFragmentInteractionListener, create_class.OnFragmentInteractionListener,
-        InstructorJoinClassFragment.OnFragmentInteractionListener{
+        InstructorJoinClassFragment.OnFragmentInteractionListener,
+        Instructor_MyCourses_fragment.OnFragmentInteractionListener,
+        Instructor_project_page_fragment.OnFragmentInteractionListener {
 
     private FirebaseAuth mAuth;
     private DrawerLayout mDrawer;
@@ -44,11 +46,10 @@ implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInte
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if(!checkUserStatus()){
+        if (!checkUserStatus()) {
             navigateToActivity(UserRoleSelectionActivity.class);
             finish();
         }
-
 
 
         // Find our drawer view
@@ -69,7 +70,7 @@ implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInte
         if (savedInstanceState == null) {
             Fragment fragment = null;
             try {
-                 fragment = (Fragment)class_page.class.newInstance();
+                fragment = (Fragment) Instructor_MyCourses_fragment.class.newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -82,8 +83,9 @@ implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInte
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
     }
+
     // `onPostCreate` called when activity start-up is complete after `onStart()`
     // NOTE 1: Make sure to override the method with only a single `Bundle` argument
     // Note 2: Make sure you implement the correct `onPostCreate(Bundle savedInstanceState)` method.
@@ -94,7 +96,6 @@ implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInte
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
     }
-
 
 
     @Override
@@ -126,16 +127,18 @@ implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInte
             case R.id.nav_new_class:
                 fragmentClass = create_class.class;
                 break;
-            case R.id.nav_class:
-                fragmentClass = class_page.class;
-                break;
+//            case R.id.nav_class:
+//                fragmentClass = class_page.class;
+//                break;
             case R.id.nav_logout:
                 fragmentClass = LogoutFragment.class;
                 break;
             case R.id.nav_join_class:
                 fragmentClass = InstructorJoinClassFragment.class;
                 break;
-
+            case R.id.nav_course_page:
+                fragmentClass = Instructor_MyCourses_fragment.class;
+                break;
             default:
                 fragmentClass = user_profile.class;
         }
@@ -171,17 +174,17 @@ implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInte
 
     }
 
-    public void navigateToActivity(Class c){
+    public void navigateToActivity(Class c) {
         Intent intent = new Intent(this, c);
         startActivity(intent);
     }
 
-    public boolean checkUserStatus(){
+    public boolean checkUserStatus() {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if (currentUser == null ){
+        if (currentUser == null) {
             return false;
         }
         return true;

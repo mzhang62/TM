@@ -100,7 +100,7 @@ public class create_project extends Fragment implements View.OnClickListener {
         DatabaseReference studentReference = FirebaseDatabase.getInstance().getReference("Student");
         final DatabaseReference classReference = FirebaseDatabase.getInstance().getReference("Class");
         my_class = rootView.findViewById(R.id.my_Class);
-        //fill the class names into the spinner
+        //inflate the class names from DB into the spinner
         studentReference.child(user.getUid()).child("myClass").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -184,9 +184,9 @@ public class create_project extends Fragment implements View.OnClickListener {
     }
 
     public void addProjectToDB() {
-        FirebaseUser user = mAuth.getInstance().getCurrentUser();
+        final FirebaseUser user = mAuth.getInstance().getCurrentUser();
         //database references
-        DatabaseReference projectReference = FirebaseDatabase.getInstance().getReference("Projects");
+        final DatabaseReference projectReference = FirebaseDatabase.getInstance().getReference("Projects");
         DatabaseReference studentReference = FirebaseDatabase.getInstance().getReference("Student");
         DatabaseReference classReference = FirebaseDatabase.getInstance().getReference("Class");
         //get the rootView of this fragment
@@ -198,24 +198,44 @@ public class create_project extends Fragment implements View.OnClickListener {
         Spinner projectClassID = (Spinner) rootView.findViewById(R.id.my_Class);
         //add project under "Project" branch
         ArrayList<String> members = new ArrayList<>();
-        members.add(user.getDisplayName());
-        String projectID = projectReference.push().getKey();
+        //add the current user under the project list
+        //members.add(user.getUid());
+        //get project info from user entered fields
+        final String projectID = projectReference.push().getKey();
         String projectName = projectTitle.getText().toString().trim();
         String StringMax = projectMaxMembers.getText().toString().trim();
         String projectDes = projectDescription.getText().toString().trim();
+        //get the selected item from the spinner;
+        String[] selectedClass = projectClassID.getSelectedItem().toString().split(" ");
+        String selectedClassName = selectedClass[0];
+        String selectedClassID = selectedClass[1];
+        //check if any of the fields are empty
         if (projectDes.equals("") || projectName.equals("") || StringMax.equals("")) {
             Toast.makeText(getActivity(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return;
         }
         int projectMax = Integer.parseInt(StringMax);
-        ProjectObject this_project = new ProjectObject(projectID, projectName, members, PENDING, projectDes, projectMax);
+        ProjectObject this_project = new ProjectObject(projectID, projectName, PENDING, projectDes, projectMax);
         //add the project object under the Project branch
         projectReference.child(projectID).setValue(this_project);
+        //add current user's ID and nickname under the member branch of this new project
+        studentReference.child(user.getUid()).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //check if the user have a valid nickname
+                if(dataSnapshot.exists()){
+                    String userNickname = dataSnapshot.getValue(String.class);
+                    projectReference.child(projectID).child("projectMembers").child(user.getUid()).setValue(userNickname);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         //add project record into user's own branch
-        studentReference.child(user.getUid()).child("myProject").child(projectID).setValue(true);
-        //get the selected item from the spinner;
-        String[] selectedClass = projectClassID.getSelectedItem().toString().split(" ");
-        String selectedClassID = selectedClass[1];
+        studentReference.child(user.getUid()).child("myProject").child(projectID).setValue(selectedClassID);
         Log.i("Spinner value", "The selected value is " + selectedClassID);
         //add the project ID under the class branch
         classReference.child(selectedClassID).child("classProject").child(projectID).setValue(true);

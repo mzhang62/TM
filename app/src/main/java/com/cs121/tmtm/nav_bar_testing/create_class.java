@@ -145,7 +145,7 @@ public class create_class extends Fragment implements View.OnClickListener {
         ClassObject this_class = new ClassObject(classID, className,classDes, instructor_array, student_array,project_array);
         classReference.child(classID).setValue(this_class);
         classReference.child(classID).child("classInstructor").child(user.getUid()).setValue(true);
-        instructorReference.child(user.getUid()).child("myClass").child(classID).setValue(true);
+        instructorReference.child(user.getUid()).child("myClass").child(classID).setValue(className);
         Toast.makeText(getActivity(), "You've created a new class!", Toast.LENGTH_SHORT).show();
         clearFields();
         FragmentTransaction fr = getFragmentManager().beginTransaction();

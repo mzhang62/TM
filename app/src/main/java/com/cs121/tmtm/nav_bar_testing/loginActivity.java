@@ -28,8 +28,8 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class loginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private DatabaseReference instructorReference;
-    private DatabaseReference studentReference;
+    private DatabaseReference instructorReference = FirebaseDatabase.getInstance().getReference("Instructor");
+    private DatabaseReference studentReference = FirebaseDatabase.getInstance().getReference("Student");
     private Button loginButton;
     private Button signupButton;
     private EditText emailEditText;

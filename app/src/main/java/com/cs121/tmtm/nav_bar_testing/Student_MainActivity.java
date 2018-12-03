@@ -22,10 +22,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 public class Student_MainActivity extends AppCompatActivity
-implements user_profile.OnFragmentInteractionListener, create_project.OnFragmentInteractionListener,
-class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionListener,
+        implements user_profile.OnFragmentInteractionListener, create_project.OnFragmentInteractionListener,
+        class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionListener,
         StudentJoinClassFragment.OnFragmentInteractionListener,
-        Student_MyCourses_fragment.OnFragmentInteractionListener, Student_project_page_fragment.OnFragmentInteractionListener{
+        Student_MyCourses_fragment.OnFragmentInteractionListener, Student_project_page_fragment.OnFragmentInteractionListener,
+        StudentJoinProject_Fragment.OnFragmentInteractionListener {
 
     private FirebaseAuth mAuth;
     private DrawerLayout mDrawer;
@@ -49,11 +50,10 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if(!checkUserStatus()){
+        if (!checkUserStatus()) {
             navigateToActivity(UserRoleSelectionActivity.class);
             finish();
         }
-
 
 
         // Find our drawer view
@@ -74,7 +74,7 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
         if (savedInstanceState == null) {
             Fragment fragment = null;
             try {
-                 fragment = (Fragment)Student_MyCourses_fragment.class.newInstance();
+                fragment = (Fragment) Student_MyCourses_fragment.class.newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -87,8 +87,9 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
     }
+
     // `onPostCreate` called when activity start-up is complete after `onStart()`
     // NOTE 1: Make sure to override the method with only a single `Bundle` argument
     // Note 2: Make sure you implement the correct `onPostCreate(Bundle savedInstanceState)` method.
@@ -99,7 +100,6 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
     }
-
 
 
     @Override
@@ -134,6 +134,9 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
 //            case R.id.nav_my_project:
 //                fragmentClass = class_page.class;
 //                break;
+            case R.id.nav_join_project:
+                fragmentClass = StudentJoinProject_Fragment.class;
+                break;
             case R.id.nav_logout:
                 fragmentClass = LogoutFragment.class;
                 break;
@@ -178,17 +181,17 @@ class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionLi
 
     }
 
-    public void navigateToActivity(Class c){
+    public void navigateToActivity(Class c) {
         Intent intent = new Intent(this, c);
         startActivity(intent);
     }
 
-    public boolean checkUserStatus(){
+    public boolean checkUserStatus() {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if (currentUser == null ){
+        if (currentUser == null) {
             return false;
         }
         return true;

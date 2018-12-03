@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class Instructor_MainActivity extends AppCompatActivity
-        implements user_profile.OnFragmentInteractionListener, class_page.OnFragmentInteractionListener,
+        implements Instructor_user_profile_fragment.OnFragmentInteractionListener, class_page.OnFragmentInteractionListener,
         LogoutFragment.OnFragmentInteractionListener, create_class.OnFragmentInteractionListener,
         InstructorJoinClassFragment.OnFragmentInteractionListener,
         Instructor_MyCourses_fragment.OnFragmentInteractionListener,
@@ -122,7 +122,7 @@ public class Instructor_MainActivity extends AppCompatActivity
         Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.nav_profile:
-                fragmentClass = user_profile.class;
+                fragmentClass = Instructor_user_profile_fragment.class;
                 break;
             case R.id.nav_new_class:
                 fragmentClass = create_class.class;
@@ -140,7 +140,7 @@ public class Instructor_MainActivity extends AppCompatActivity
                 fragmentClass = Instructor_MyCourses_fragment.class;
                 break;
             default:
-                fragmentClass = user_profile.class;
+                fragmentClass = Student_user_profile_fragment.class;
         }
 
         try {

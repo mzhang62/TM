@@ -17,12 +17,10 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 public class Student_MainActivity extends AppCompatActivity
-        implements user_profile.OnFragmentInteractionListener, create_project.OnFragmentInteractionListener,
+        implements Student_user_profile_fragment.OnFragmentInteractionListener, create_project.OnFragmentInteractionListener,
         class_page.OnFragmentInteractionListener, LogoutFragment.OnFragmentInteractionListener,
         StudentJoinClassFragment.OnFragmentInteractionListener,
         Student_MyCourses_fragment.OnFragmentInteractionListener, Student_project_page_fragment.OnFragmentInteractionListener,
@@ -126,7 +124,7 @@ public class Student_MainActivity extends AppCompatActivity
         Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.nav_profile:
-                fragmentClass = user_profile.class;
+                fragmentClass = Student_user_profile_fragment.class;
                 break;
             case R.id.nav_project:
                 fragmentClass = create_project.class;
@@ -147,7 +145,7 @@ public class Student_MainActivity extends AppCompatActivity
                 fragmentClass = Student_MyCourses_fragment.class;
                 break;
             default:
-                fragmentClass = user_profile.class;
+                fragmentClass = Student_user_profile_fragment.class;
         }
 
         try {

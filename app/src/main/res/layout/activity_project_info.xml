@@ -1,94 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:scrollbars="vertical"
     android:id="@+id/profile_layout"
     tools:context=".ProjectInfoActivity">
 
-    <!-- image, title, description -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
-
-        <!-- image -->
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/apple_icon"/>
-
-        <!-- title and description -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/projectName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                android:text="project title" />
-
-            <TextView
-                android:id="@+id/projectMembers"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:text="Project Members" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- long description-->
-    <TextView
-        android:id="@+id/long_des"
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:text="Project Descriptions"
-        android:scrollbars="vertical"
-        android:layout_margin="10dp"
-        android:textSize="20sp" />
-
-    <!-- add note -->
-    <EditText
-        android:id="@+id/addNote"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
-        android:textSize="30sp"
-        android:hint="Note: ...." />
-
-    <!-- buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/approve"
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="150dp"
-            android:layout_marginLeft="30dp"
-            android:onClick="setApproved"
-            android:text="approve"/>
+        android:orientation="vertical">
+        <!-- image, title, description -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <!-- image -->
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/apple_icon"/>
+
+            <!-- title and description -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/projectName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:text="project title" />
+
+                <TextView
+                    android:id="@+id/projectMembers"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:text="Project Members" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- long description-->
+        <TextView
+            android:id="@+id/long_des"
+            android:layout_width="match_parent"
+            android:layout_height="93dp"
+            android:layout_margin="10dp"
+            android:scrollbars="vertical"
+            android:text="Project Descriptions"
+            android:textSize="20sp" />
+
+        <!-- add note -->
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="10dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/comment_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="60dp"
+                android:overScrollMode="never" />
+        </android.support.v7.widget.CardView>
+        <!-- buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/approve"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:onClick="setApproved"
+                android:text="approve"/>
+
+            <Button
+                android:id="@+id/add_comment"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:onClick="setDenied"
+                android:text="addNote"/>
 
 
-        <Button
-            android:id="@+id/decline"
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="30dp"
-            android:onClick="setDenied"
-            android:text="decline"/>
+            <Button
+                android:id="@+id/decline"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:onClick="setDenied"
+                android:text="decline"/>
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

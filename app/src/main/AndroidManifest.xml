@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Instructor_MainActivity" />
+        <activity android:name=".PostComment_Activity"/>
         <activity android:name=".ProjectInfoActivity" />
         <activity android:name=".loginActivity" />
         <activity

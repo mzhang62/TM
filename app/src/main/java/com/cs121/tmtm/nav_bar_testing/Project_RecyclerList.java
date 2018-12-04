@@ -88,13 +88,13 @@ public class Project_RecyclerList extends RecyclerView.Adapter<Project_RecyclerL
 //        myViewHolder.projectMembers.setText(this_project.getProjectMembers().size() + "/" + this_project.getGroupCapacity());
         int projectStatus = this_project.getProjectAcceptedStatus();
         if(projectStatus == APPROVED){
-            myViewHolder.projectStatus.setImageResource(R.drawable.approved_icon);
+            myViewHolder.projectStatus.setImageResource(R.drawable.approved);
         }
         else if (projectStatus == DENIED){
-            myViewHolder.projectStatus.setImageResource(R.drawable.denied_icon);
+            myViewHolder.projectStatus.setImageResource(R.drawable.declined);
         }
         else {
-            myViewHolder.projectStatus.setImageResource(R.drawable.pending_icon);
+            myViewHolder.projectStatus.setImageResource(R.drawable.pending);
         }
         myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

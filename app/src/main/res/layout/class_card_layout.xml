@@ -14,8 +14,14 @@
             android:id="@+id/classTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:text="TextView"
-            android:textSize="40sp" />
+            android:fontFamily="sans-serif"
+            android:textColor="#000"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="16dp"
+            />
     </LinearLayout>
 </android.support.v7.widget.CardView>

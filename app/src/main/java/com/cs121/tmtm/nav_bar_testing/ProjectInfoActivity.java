@@ -30,8 +30,9 @@ public class ProjectInfoActivity extends AppCompatActivity implements View.OnCli
     TextView projectName;
     TextView projectMembers;
     TextView projectDescription;
+    TextView add_comment;
+
     RecyclerView commentView;
-    Button add_comment;
     Button approveBtn;
     Button denyBtn;
     private ProjectObject this_project;
@@ -57,7 +58,7 @@ public class ProjectInfoActivity extends AppCompatActivity implements View.OnCli
         projectDescription.setMovementMethod(new ScrollingMovementMethod());
         commentView = (RecyclerView) findViewById(R.id.comment_recycler);
         commentView.setLayoutManager(new LinearLayoutManager(this));
-        add_comment = (Button) findViewById(R.id.add_comment);
+        add_comment = (TextView) findViewById(R.id.add_comment);
         add_comment.setOnClickListener(this);
         this_user = mAuth.getInstance().getCurrentUser();
         Intent intent = getIntent();

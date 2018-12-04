@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PostReviewActivity">
+    tools:context=".PostComment_Activity">
 
     <EditText
         android:id="@+id/ReviewText"
@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="submitReview"
+        android:background="@color/themeColor"
         android:text="Post" />
 
     <Button
@@ -33,5 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="cancelReview"
+        android:background="#bbb"
+
         android:text="Cancel" />
 </LinearLayout>

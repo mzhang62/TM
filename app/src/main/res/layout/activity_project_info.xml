@@ -1,116 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:id="@+id/profile_layout"
+android:background="@drawable/bg2"
+tools:context=".ProjectInfoActivity">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="324dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/projectMembers4">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comment_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="60dp"
+            />
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="-10dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/decline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/common_google_signin_btn_text_dark_default">
+
+    </android.support.v7.widget.CardView>
+
+<TextView
+    android:id="@+id/projectName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="30dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginTop="36dp"
+    android:fontFamily="sans-serif"
+    android:text="Project Name"
+    android:textColor="#000"
+    android:textSize="32sp"
+    android:textStyle="bold"
+    app:fontFamily="sans-serif"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+<TextView
+    android:id="@+id/projectMembers"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="30dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginTop="20dp"
+    android:gravity="center"
+    android:text="Project Members"
+    android:textColor="#333"
+    android:textSize="18sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/projectMembers3" />
+
+<TextView
+    android:id="@+id/projectMembers2"
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginTop="20dp"
+    android:gravity="center"
+    android:textStyle="bold"
+
+    android:text="Description"
+    android:textColor="#333"
+    android:textSize="16sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/projectMembers" />
+
+    <TextView
+        android:id="@+id/projectMembers4"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Comments"
+        android:textColor="#333"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/long_des" />
+
+    <TextView
+    android:id="@+id/projectMembers3"
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginLeft="30dp"
+
+    android:layout_marginTop="20dp"
+    android:gravity="center"
+    android:text="Members"
+    android:textColor="#333"
+    android:textSize="16sp"
+    android:textStyle="bold"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/projectName" />
+
+    <TextView
+    android:id="@+id/long_des"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="30dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="30dp"
+    android:layout_marginRight="30dp"
     android:scrollbars="vertical"
-    android:id="@+id/profile_layout"
-    tools:context=".ProjectInfoActivity">
+    android:text="Project Descriptions"
+    android:textColor="#333"
+    android:textSize="17sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/projectMembers2" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <!-- image, title, description -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
+<!-- add note -->
 
-            <!-- image -->
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/apple_icon"/>
-
-            <!-- title and description -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/projectName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textSize="30sp"
-                    android:text="project title" />
-
-                <TextView
-                    android:id="@+id/projectMembers"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:text="Project Members" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- long description-->
-        <TextView
-            android:id="@+id/long_des"
-            android:layout_width="match_parent"
-            android:layout_height="93dp"
-            android:layout_margin="10dp"
-            android:scrollbars="vertical"
-            android:text="Project Descriptions"
-            android:textSize="20sp" />
-
-        <!-- add note -->
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="10dp">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/comment_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginBottom="60dp"
-                android:overScrollMode="never" />
-        </android.support.v7.widget.CardView>
-        <!-- buttons -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/approve"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:onClick="setApproved"
-                android:text="approve"/>
-
-            <Button
-                android:id="@+id/add_comment"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:onClick="setDenied"
-                android:text="addNote"/>
+    <Button
+        android:id="@+id/approve"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/approve"
+        android:onClick="setApproved"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
 
-            <Button
-                android:id="@+id/decline"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:onClick="setDenied"
-                android:text="decline"/>
-        </LinearLayout>
+    <Button
+        android:id="@+id/decline"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/decline"
+        android:onClick="setDenied"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
+<ImageView
+    android:id="@+id/imageView3"
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginEnd="30dp"
+    android:layout_marginRight="30dp"
+    app:layout_constraintBottom_toBottomOf="@+id/projectMembers2"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/projectMembers2"
+    app:layout_constraintTop_toTopOf="@+id/projectMembers2"
+    android:background="#fff" />
 
+<ImageView
+    android:id="@+id/imageView4"
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginEnd="30dp"
+    android:layout_marginRight="30dp"
+    app:layout_constraintBottom_toBottomOf="@+id/projectMembers3"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/projectMembers3"
+    app:layout_constraintTop_toTopOf="@+id/projectMembers3"
+    android:background="#fff" />
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/add_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_weight="1"
+        android:onClick="setDenied"
+        android:text="Make comment"
+        android:textColor="#00f"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/projectMembers4" />
 
-</ScrollView>
+</android.support.constraint.ConstraintLayout>

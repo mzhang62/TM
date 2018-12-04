@@ -4,13 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     tools:context=".loginActivity">
 
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/loginButton"
+        app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
+        app:layout_constraintStart_toStartOf="@+id/passwordEditText"
+        app:layout_constraintTop_toTopOf="@+id/emailEditText">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="286dp"
+            android:layout_height="220dp"
+            android:layout_marginTop="8dp"
+
+            app:srcCompat="@android:color/background_light" />
+    </android.support.v7.widget.CardView>
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="248dp"
         android:ems="10"
         android:hint="Email/Username"
         android:inputType="textEmailAddress"
@@ -36,7 +55,7 @@
         android:layout_width="260dp"
         android:layout_height="52dp"
         android:layout_marginTop="16dp"
-        android:background="@android:color/holo_red_light"
+        android:background="@color/themeColor"
         android:text="Login"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,13 +64,34 @@
 
     <Button
         android:id="@+id/signupButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="260dp"
         android:layout_height="52dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="33dp"
+        android:background="@color/themeColor"
         android:text="Don't have an account?"
         android:textAlignment="center"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="117dp"
+        android:layout_marginLeft="117dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginRight="117dp"
+        android:text="Welcome"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="36sp"
+        app:fontFamily="sans-serif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -4,18 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="30dp"
+
     android:orientation="vertical"
+    android:background="@drawable/bg"
     tools:context=".UserRoleSelectionActivity">
 
-    <Button
-        android:id="@+id/loginInstructor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Login as an Instructor" />
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="220dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/logo" />
 
-    <Button
-        android:id="@+id/loginStudent"
+    <TextView
         android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="TEAM MASTER"
+        android:textSize="30sp"
+        android:textColor="@color/pink"
+        android:textStyle="italic"
+        android:gravity="center"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login as a Student" />
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/loginInstructor"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:background="@drawable/login"
+            android:layout_margin="10dp"
+            android:textColor="@color/pink"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:text="Login as an Instructor" />
+
+        <Button
+            android:id="@+id/loginStudent"
+            android:layout_width="200dp"
+            android:background="@drawable/login"
+            android:textColor="@color/pink"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:text="Login as a Student" />
+
+    </LinearLayout>
+
 </LinearLayout>

@@ -177,7 +177,7 @@ public class create_project extends Fragment implements View.OnClickListener {
                 break;
             case R.id.cancel:
                 FragmentTransaction cancel = getFragmentManager().beginTransaction();
-                cancel.replace(R.id.flContent, new class_page());
+                cancel.replace(R.id.flContent, new Student_MyCourses_fragment());
                 cancel.commit();
                 break;
         }
@@ -243,7 +243,7 @@ public class create_project extends Fragment implements View.OnClickListener {
         Toast.makeText(getActivity(), "You've created a new project!", Toast.LENGTH_SHORT).show();
         clearFields();
         FragmentTransaction fr = getFragmentManager().beginTransaction();
-        fr.replace(R.id.flContent, new class_page());
+        fr.replace(R.id.flContent, new Student_MyCourses_fragment());
         fr.commit();
 
     }

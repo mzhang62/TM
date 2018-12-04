@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -86,7 +87,7 @@ public class Instructor_project_page_fragment extends Fragment {
         // Inflate the layout for this fragment
         FirebaseUser this_user = mAuth.getInstance().getCurrentUser();
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_project_page_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_project_page_fragment, container, false);
         Bundle bundle = this.getArguments();
         String classID = null;
         if (bundle != null) {
@@ -111,7 +112,13 @@ public class Instructor_project_page_fragment extends Fragment {
                                 String this_project_ID = myProjects.getKey();
                                 projectIDs.add(this_project_ID);
 
-                            }//after fetching all the IDs, find them one by one under project ref
+                            }
+                            //if there is no project in this course yet
+                            if(projectIDs.isEmpty()){
+                                Toast.makeText(rootView.getContext(), "There are no project in this course.", Toast.LENGTH_SHORT).show();
+                            }
+
+                            //after fetching all the IDs, find them one by one under project ref
                             projectReference.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -84,7 +85,7 @@ public class Instructor_MyCourses_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_my_courses_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_my_courses_fragment, container, false);
         //reference to recyclerView
         myView = (RecyclerView) rootView.findViewById(R.id.classView);
         myView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -101,6 +102,9 @@ public class Instructor_MyCourses_fragment extends Fragment {
                     String classTitle = myClasses.getValue(String.class);
                     String classTitleID = classTitle + " " + classID;
                     classes.add(classTitleID);
+                }
+                if(classes.isEmpty()){
+                    Toast.makeText(rootView.getContext(), "You are not enrolled in any course.", Toast.LENGTH_LONG).show();
                 }
                 Instructor_Class_RecyclerList adaptor = new Instructor_Class_RecyclerList(classes);
                 myView.setAdapter(adaptor);
